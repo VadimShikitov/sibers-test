@@ -1,0 +1,1 @@
+export { ContactsTableContainer } from './ContactsTableContainer';
