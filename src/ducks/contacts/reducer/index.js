@@ -26,9 +26,9 @@ export const ContactsReducer = (state = initialState, action) => {
         [action.data.id]: action.data,
       };
     case DELETE_CONTACT: {
-      const { constacts, ids } = state;
+      const { contacts, ids } = state;
       const newIds = ids.filter(id => id !== action.id);
-      const { [action.id]: deletedContact, otherContacts } = constacts;
+      const { [action.id]: deletedContact, ...otherContacts } = contacts;
       return {
         contacts: otherContacts,
         ids: newIds,

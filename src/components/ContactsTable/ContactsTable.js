@@ -6,55 +6,80 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { makeStyles } from '@material-ui/core/styles';
+import {
+  createMuiTheme,
+  makeStyles,
+  ThemeProvider,
+} from '@material-ui/core/styles';
 
-const useStyles = makeStyles({});
+const useStyles = makeStyles({
+  tableHead: {
+    backgroundColor: '#D8E6FF',
+  },
+  mainTableRow: {
+    '& > th': {
+      color: '#4F91FF',
+      borderBottom: '#4F91FF 1px solid',
+    },
+  },
+  tableBody: {
+    backgroundColor: '#EBF2FF',
+  },
+  contactRow: {
+    cursor: 'pointer',
+  },
+});
+
+const tableTheme = createMuiTheme({
+  overrides: {
+    MuiTableRow: {
+      hover: {
+        '&:hover': {
+          backgroundColor: '#D8E6FF !important',
+        },
+      },
+    },
+  },
+});
 
 /**
  * Component for show contacts table
  * @param contacts - all contacts data, for view table;
+ * @param handleChangeRoute - function for change route on sigle contact
  */
-export const ContactsTable = ({ contacts }) => {
+export const ContactsTable = ({ contacts, handleChangeRoute }) => {
   const classes = useStyles();
   return (
-    <TableContainer>
-      <Table>
-        <TableHead style={{ backgroundColor: '#D8E6FF' }}>
-          <TableRow>
-            <TableCell
-              style={{ color: '#4F91FF', borderBottom: '#4F91FF 1px solid' }}
-            >
-              Full Name
-            </TableCell>
-            <TableCell
-              style={{ color: '#4F91FF', borderBottom: '#4F91FF 1px solid' }}
-            >
-              Email
-            </TableCell>
-            <TableCell
-              style={{ color: '#4F91FF', borderBottom: '#4F91FF 1px solid' }}
-            >
-              City
-            </TableCell>
-            <TableCell
-              style={{ color: '#4F91FF', borderBottom: '#4F91FF 1px solid' }}
-            >
-              Phone
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody style={{ backgroundColor: '#EBF2FF' }}>
-          {contacts.map(({ name, email, address, phone, id }) => (
-            <TableRow key={id}>
-              <TableCell>{name}</TableCell>
-              <TableCell>{email}</TableCell>
-              <TableCell>{address.city}</TableCell>
-              <TableCell>{phone}</TableCell>
+    <ThemeProvider theme={tableTheme}>
+      <TableContainer>
+        <Table>
+          <TableHead className={classes.tableHead}>
+            <TableRow className={classes.mainTableRow}>
+              <TableCell>Full Name</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>City</TableCell>
+              <TableCell>Phone</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody className={classes.tableBody}>
+            {contacts.map(({ name, email, address, phone, id }) => (
+              <TableRow
+                key={id}
+                data-id={id}
+                hover
+                className={classes.contactRow}
+                onClick={handleChangeRoute}
+              >
+                <TableCell>{name}</TableCell>
+                <TableCell>{email}</TableCell>
+                <TableCell>{address.city}</TableCell>
+                <TableCell>{phone}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </ThemeProvider>
   );
 };
 
@@ -77,4 +102,5 @@ ContactsTable.propTypes = {
       phone: PropTypes.string,
     }),
   ),
+  handleChangeRoute: PropTypes.func,
 };

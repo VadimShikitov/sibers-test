@@ -1,0 +1,1 @@
+export { EditContactComponent } from './EditCEditContactComponent';

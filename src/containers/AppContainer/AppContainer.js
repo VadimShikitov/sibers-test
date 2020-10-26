@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { initApp } from '../../ducks/app/actions';
-import { BrowserRouter } from 'react-router-dom';
 import { Routes } from '../Routes';
 
 /**
@@ -14,10 +14,8 @@ export const AppContainer = () => {
     dispatch(initApp());
   }, [dispatch]);
   return (
-    <div className='App'>
-      <BrowserRouter>
-        <Routes />
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Routes />
+    </BrowserRouter>
   );
 };

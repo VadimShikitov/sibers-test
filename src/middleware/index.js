@@ -1,4 +1,5 @@
 import { INIT_APP } from '../ducks/app/types';
+import { DELETE_CONTACT } from '../ducks/contacts/types';
 import { getAllContacts } from '../ducks/contacts/actions';
 
 /*async function for requesting data from the backend. 
@@ -63,6 +64,19 @@ export const localstorage = state => next => action => {
         getContacts(state);
         break;
       }
+      case DELETE_CONTACT:
+        {
+          const { contacts, ids } = state.getState();
+          const { [action.id]: deletedContacts, ...newContacts } = contacts;
+          const newIds = ids.filter(id => id !== action.id);
+          const contactsCollection = Object.values(newContacts);
+          window.localStorage.setItem(
+            'contacts',
+            JSON.stringify(contactsCollection),
+          );
+          window.localStorage.setItem('ids', JSON.stringify(newIds));
+        }
+        break;
       default:
         break;
     }
