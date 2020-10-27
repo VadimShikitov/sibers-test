@@ -20,37 +20,37 @@ const useStyles = makeStyles({
  * @param id - contact id for set data-id on buttons
  * @returns two buttons for managing our redux state with dispatching actions
  */
-export const ContactActions = ({
-  handleOpenEditor,
-  deleteContactHandler,
-  id,
-}) => {
-  const classes = useStyles();
+export const ContactActions = React.memo(
+  ({ handleOpenEditor, deleteContactHandler, id }) => {
+    const classes = useStyles();
 
-  return (
-    <>
-      <div className={classes.buttonsDiv}>
-        <Button
-          data-id={id}
-          variant='outlined'
-          color='primary'
-          className={classes.editButton}
-          onClick={handleOpenEditor}
-        >
-          Edit
-        </Button>
-        <Button
-          data-id={id}
-          variant='outlined'
-          color='secondary'
-          onClick={deleteContactHandler}
-        >
-          Delete
-        </Button>
-      </div>
-    </>
-  );
-};
+    return (
+      <>
+        <div className={classes.buttonsDiv}>
+          <Button
+            data-id={id}
+            variant='outlined'
+            color='primary'
+            className={classes.editButton}
+            onClick={handleOpenEditor}
+          >
+            Edit
+          </Button>
+          <Button
+            data-id={id}
+            variant='outlined'
+            color='secondary'
+            onClick={deleteContactHandler}
+          >
+            Delete
+          </Button>
+        </div>
+      </>
+    );
+  },
+);
+
+ContactActions.displayName = 'ContactActions';
 
 ContactActions.propTypes = {
   handleOpenEditor: PropTypes.func,

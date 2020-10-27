@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
  * @param company - contact company
  * @returns All text information about the contact
  */
-export const InfoAboutContact = ({ contact }) => {
+export const InfoAboutContact = React.memo(({ contact }) => {
   const { name, username, email, address, phone, website, company } = contact;
 
   return (
@@ -42,7 +42,9 @@ export const InfoAboutContact = ({ contact }) => {
       </Typography>
     </>
   );
-};
+});
+
+InfoAboutContact.displayName = 'InfoAboutContact';
 
 InfoAboutContact.propTypes = {
   contact: PropTypes.shape({

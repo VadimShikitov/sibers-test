@@ -5,9 +5,10 @@ export const getAllContacts = data => ({
   data,
 });
 
-export const editContact = data => ({
+export const editContact = (data, id) => ({
   type: EDIT_CONTACT,
   data,
+  id,
 });
 
 export const deleteContact = id => ({

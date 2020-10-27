@@ -1,5 +1,5 @@
 import { INIT_APP } from '../ducks/app/types';
-import { DELETE_CONTACT } from '../ducks/contacts/types';
+import { DELETE_CONTACT, EDIT_CONTACT } from '../ducks/contacts/types';
 import { getAllContacts } from '../ducks/contacts/actions';
 
 /*async function for requesting data from the backend. 
@@ -25,43 +25,34 @@ const getContacts = async state => {
 */
 export const localstorage = state => next => action => {
   if (action) {
-    // switch (action.type) {
-    //   case ADD_BOOKMARK: {
-    //     const { bookmarks, ids } = state.getState();
-    //     const bookmarksCollection = Object.values(bookmarks);
-    //     bookmarksCollection.push(action.data);
-    //     window.localStorage.setItem(
-    //       'bookmarks',
-    //       JSON.stringify(bookmarksCollection),
-    //     );
-    //     window.localStorage.setItem(
-    //       'ids',
-    //       JSON.stringify([...ids, action.data.id]),
-    //     );
-    //     break;
-    //   }
-    //   case DELETE_BOOKMARK:
-    //     {
-    //       const { bookmarks, ids } = state.getState();
-    //       const { [action.id]: deletedBookmark, ...newBookmarks } = bookmarks;
-    //       const newIds = ids.filter((id: string) => id !== action.id);
-    //       const bookmarksCollection = Object.values(newBookmarks);
-    //       window.localStorage.setItem(
-    //         'bookmarks',
-    //         JSON.stringify(bookmarksCollection),
-    //       );
-    //       window.localStorage.setItem('ids', JSON.stringify(newIds));
-    //     }
-    //     break;
-    //   case REMOVE_ALL_BOOKMARKS:
-    //     window.localStorage.clear();
-    //     break;
-    //   default:
-    //     break;
-    // }
     switch (action.type) {
       case INIT_APP: {
         getContacts(state);
+        break;
+      }
+      case EDIT_CONTACT: {
+        const { contacts } = state.getState();
+        const { [action.id]: editedContact } = contacts;
+        const newContacts = {
+          ...contacts,
+          [action.id]: {
+            ...editedContact,
+            username: action.data.username,
+            email: action.data.email,
+            phone: action.data.phone,
+            website: action.data.website,
+            company: {
+              ...editedContact.company,
+              name: action.data.company,
+            },
+          },
+        };
+
+        const contactsCollection = Object.values(newContacts);
+        window.localStorage.setItem(
+          'contacts',
+          JSON.stringify(contactsCollection),
+        );
         break;
       }
       case DELETE_CONTACT:

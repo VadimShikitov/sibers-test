@@ -32,32 +32,32 @@ const useStyles = makeStyles({
  * @param handleOpenEditor - function to inverse state and showing editor
  * @returns Contact card with info and actions
  */
-export const SingleContact = ({
-  contact,
-  deleteContactHandler,
-  handleOpenEditor,
-}) => {
-  const classes = useStyles();
+export const SingleContact = React.memo(
+  ({ contact, deleteContactHandler, handleOpenEditor }) => {
+    const classes = useStyles();
 
-  return (
-    <Card className={classes.root}>
-      <CardMedia
-        component='img'
-        height='auto'
-        image={contact.avatar}
-        className={classes.cardActionArea}
-      />
-      <CardContent className={classes.cardContent}>
-        <InfoAboutContact contact={contact} />
-        <ContactActions
-          id={contact.id}
-          deleteContactHandler={deleteContactHandler}
-          handleOpenEditor={handleOpenEditor}
+    return (
+      <Card className={classes.root}>
+        <CardMedia
+          component='img'
+          height='auto'
+          image={contact.avatar}
+          className={classes.cardActionArea}
         />
-      </CardContent>
-    </Card>
-  );
-};
+        <CardContent className={classes.cardContent}>
+          <InfoAboutContact contact={contact} />
+          <ContactActions
+            id={contact.id}
+            deleteContactHandler={deleteContactHandler}
+            handleOpenEditor={handleOpenEditor}
+          />
+        </CardContent>
+      </Card>
+    );
+  },
+);
+
+SingleContact.displayName = 'SingleContact';
 
 SingleContact.propTypes = {
   contact: PropTypes.shape({
